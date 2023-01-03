@@ -7,6 +7,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI += " \
     file://fw_env.config \
     file://boot.cmd.in \
+    file://env_in_fat_qemuarm.patch \
 "
 
 
@@ -22,6 +23,8 @@ do_configure:append() {
     -e 's/@@KERNEL_BOOTCMD@@/${KERNEL_BOOTCMD}/' \
     "${WORKDIR}/boot.cmd.in" > "${WORKDIR}/boot.cmd"
 }
+
+inherit rauc-integration
 
 do_compile:append() {
     ${B}/tools/mkimage -C none -A ${UBOOT_ARCH} -T script -d "${WORKDIR}/boot.cmd" "boot.scr"
