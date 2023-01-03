@@ -1,105 +1,24 @@
-This README file contains information on the contents of the meta-rauc-raspberrypi layer.
+A layer to enable RAUC to function properly under QEMU-ARM64 + UBOOT.
 
-Please see the corresponding sections below for details.
+Example wic + cfg:
+https://github.com/vasilvas99/meta-leda/blob/main/meta-leda-distro/wic/qemuarm64.wks
+https://github.com/vasilvas99/meta-leda/blob/main/meta-leda-distro/wic/qemuarm64.cfg
 
-Dependencies
-============
+Example fstab:
 
-* URI: git://git.openembedded.org/openembedded-core
-* URI: https://github.com/rauc/meta-rauc.git
-* URI: https://git.yoctoproject.org/git/meta-raspberrypi
+https://github.com/vasilvas99/meta-leda/blob/main/meta-leda-distro/recipes-core/base-files/base-files/qemuarm64/fstab
 
-Patches
-=======
+Example machine config:
 
-Please submit any patches against the meta-rauc-raspberrypi layer via GitHub
-pull request on https://github.com/rauc/meta-rauc-community.
+https://github.com/vasilvas99/meta-leda/blob/643a61b6aa28b29204870cd3a06c249aca3acb7f/meta-leda-bsp/conf/machine/qemuarm64-extra.conf
 
-Maintainer: Leon Anavi <leon.anavi@konsulko.com>
++
 
-Disclaimer
-==========
+https://github.com/vasilvas99/meta-leda/blob/643a61b6aa28b29204870cd3a06c249aca3acb7f/meta-leda-bsp/conf/machine/common-qemu-arm.inc
 
-Note that this is just an example layer that shows a few possible configuration
-options how RAUC can be used.
-Actual requirements may differ from project to projects and will probably need
-a much different RAUC/bootloader/system configuration.
 
-Also note that this layer is for demo purpose only and does not care about
-migratability between different layer revision.
+# Changes
 
-I. Adding the meta-rauc-raspberrypi layer to your build
-=======================================================
+This layer is directly based on the meta-rauc-community rpi4-64 layer. It patches the `qemu_arm64_defconfig` such that UBOOT saves its environment on the first partition of virtio (virtio 0:1) and not the flash.
 
-Run 'bitbake-layers add-layer meta-rauc-raspberrypi'
-
-II. Build The Demo System
-=========================
-
-::
-
-   $ source oe-init-build-env
-
-Add configuration required for meta-raspberrypi to your local.conf::
-
-   # Generic raspberrypi settings
-   ENABLE_UART = "1"
-   RPI_USE_U_BOOT = "1"
-
-Set the ``MACHINE`` to the model you intend to build for. E.g.::
-
-   MACHINE = "raspberrypi4"
-
-or::
-
-   MACHINE = "raspberrypi3"
-
-Add configuration required for meta-rauc-raspberrypi to your local.conf::
-
-   # Settings for meta-rauc-raspberry-pi
-   IMAGE_INSTALL:append = " rauc"
-   IMAGE_FSTYPES:append = " ext4"
-   WKS_FILE = "sdimage-dual-raspberrypi.wks.in"
-
-Make sure either your distro (recommended) or your local.conf have ``rauc``
-``DISTRO_FEATURE`` enabled::
-
-   DISTRO_FEATURES:append = " rauc"
-
-It is also recommended, but not strictly necessary, to enable 'systemd'::
-
-   INIT_MANAGER = "systemd"
-
-Build the minimal system image::
-
-   $ bitbake core-image-minimal
-
-III. Flash & Run The Demo System
-================================
-
-You can either flash using bmaptool (recommended)::
-
-  $ bmaptool copy /path/to/core-image-minimal-raspberrypi3.wic.bz2 /dev/sdX
-
-or bzcat::
-
-  $ bzcat /path/to/core-image-minimal-raspberrypi3.wic.bz2 | dd of=/dev/sdb
-
-Then power-on the board and log in.
-To see that RAUC is configured correctly and can interact with the bootloader,
-run::
-
-  # rauc status
-
-IV. Build and Install The Demo Bundle
-=====================================
-
-To build the bundle, run::
-
-  $ bitbake qemu-demo-bundle
-
-Copy the generated bundle to the target system via nc, scp or an attached USB stick.
-
-On the target, you can then install the bundle::
-
-  # rauc install /path/to/bundle.raucb
+From this point on the environment can be readily read by/written to from userspace via the fw_printenv/setnev binaries.
