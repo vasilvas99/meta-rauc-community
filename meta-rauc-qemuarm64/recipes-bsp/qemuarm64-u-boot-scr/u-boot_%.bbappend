@@ -13,6 +13,7 @@
 #
 
 SUMMARY = "U-boot boot scripts for QEMU-ARM64"
+LICENSE = "Apache-2.0"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI += " \
@@ -21,8 +22,6 @@ SRC_URI += " \
     file://env_in_fat_qemuarm.patch \
 "
 
-
-# FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 DEPENDS += " bc-native dtc-native swig-native python3-native flex-native bison-native "
 
 
@@ -45,7 +44,3 @@ do_install() {
     install -d ${D}${sysconfdir}
     install -m 0644 ${WORKDIR}/fw_env.config ${D}${sysconfdir}/fw_env.config
 }
-
-SRC_URI += "file://LICENSE"
-LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
