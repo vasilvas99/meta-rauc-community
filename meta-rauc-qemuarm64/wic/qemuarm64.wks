@@ -1,0 +1,27 @@
+# short-description: Create qemuarm64 disk image
+# long-description: Creates a partitioned Qemu disk image for use with the RAUC
+# update tool.
+# Partition Layout:
+# ------------------------------------------------------
+#|            |             |             |             |
+#|            |             |             |             |
+#|    VFAT    |    EXT4     |    EXT4     |    EXT4     |
+#|   (BOOT)   |     (A)     |     (B)     |   (DATA)    |
+#|            |             |             |             |
+#|            |             |             |             |
+# ------------------------------------------------------
+
+
+bootloader --ptable gpt
+
+# /dev/vda1
+part --source bootimg-partition --ondisk vda --fstype=vfat --label BOOT --active --align 4096 --size 100 --use-uuid
+
+# /dev/vda2
+part --extra-space 50M --source rootfs --rootfs-dir=core-image-minimal --ondisk vda --fstype=ext4 --label root_a --align 4096
+
+# /dev/vda3
+part --extra-space 50M --source rootfs --rootfs-dir=core-image-minimal  --ondisk vda --fstype=ext4 --label root_b --align 4096
+
+# /dev/vda4
+part --fixed-size 3072M --source rootfs -ondisk vda --fstype=ext4 --label data --align 4096
