@@ -1,30 +1,44 @@
-============== QEMU-ARM64 ==============
+This README file contains information on the contents of the meta-rauc-qemuarm64 layer.
 
-A layer to enable RAUC to function properly under QEMU-ARM64 + UBOOT.
-
-============== Required partition/bsp setup ==============
-
-Example wic + cfg:
-https://github.com/vasilvas99/meta-leda/blob/main/meta-leda-distro/wic/qemuarm64.wks
-
-https://github.com/vasilvas99/meta-leda/blob/main/meta-leda-distro/wic/qemuarm64.cfg
-
-Example fstab:
-
-https://github.com/vasilvas99/meta-leda/blob/main/meta-leda-distro/recipes-core/base-files/base-files/qemuarm64/fstab
-
-Example machine config:
-
-https://github.com/vasilvas99/meta-leda/blob/643a61b6aa28b29204870cd3a06c249aca3acb7f/meta-leda-bsp/conf/machine/qemuarm64-extra.conf
-
-and
-
-https://github.com/vasilvas99/meta-leda/blob/643a61b6aa28b29204870cd3a06c249aca3acb7f/meta-leda-bsp/conf/machine/common-qemu-arm.inc
+It provides an example meta-layer for integrating UBoot and Rauc for the Qemuarm64 target.
+Currently only targets the ``kirkstone`` Yocto branch.
 
 
-============== Changes ==============
+Dependencies
+============
 
-This layer is directly based on the meta-rauc-community rpi4-64 layer. It patches the `qemu_arm64_defconfig` such that UBOOT saves its environment on the first partition of virtio (virtio 0:1) and not the flash.
+This layer depends on:
 
-From this point on the environment can be readily read by/written to from userspace via the fw_printenv/setnev binaries.
+* URI: git://git.openembedded.org/openembedded-core
+* URI: https://github.com/rauc/meta-rauc.git
 
+
+Main Points
+===========
+
+To enable the integration this meta-layer does the following
+
+* Patches the Uboot Sources to save the environment in the FAT /boot partition
+* Provides a boot.cmd.in script for the slot counting
+* Provides an ``u-boot_%.bbappend`` to compile and install the custom boot command
+* Provides a ``*.wks``-kickstart file to partition the drive and an fstab to mount the partitions in the final image
+* Provides a grow-data-partition systemd unit for the cases systemd is available.
+
+Building The Qemuarm64 Demo System
+==================================
+
+Building the demo system is most easily done using the ``kas`` tool. The file providing the complete kas-config is 
+``qemuarm64-demo-minimal.yaml``.
+
+1. Clone this repository
+
+2. ``cd meta-rauc-qemuarm64``
+
+3. Generate example rauc keys following the instructions for the meta-rauc-qemux86 meta-layer:
+https://github.com/rauc/meta-rauc-community/tree/master/meta-rauc-qemux86#a-using-kas-tool-to-build
+
+4. Run::
+    kas build qemuarm64-demo-minimal.yaml
+
+5. After the build has successfully completed, you can boot into the image by running::
+    kas shell qemuarm64-demo-minimal.yaml -c 'runqemu nographic core-image-minimal'
