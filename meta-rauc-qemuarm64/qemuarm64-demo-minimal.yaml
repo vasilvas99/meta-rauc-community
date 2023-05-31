@@ -8,8 +8,7 @@ repos:
     url: "https://github.com/rauc/meta-rauc.git"
     refspec: "kirkstone"
   meta-rauc-demo:
-    url: "https://github.com/vasilvas99/meta-rauc-community.git"
-    refspec: "master"
+    path: ../
     layers:
       meta-rauc-qemuarm64:
   poky:
@@ -29,3 +28,4 @@ local_conf_header:
     IMAGE_FSTYPES = "wic"
     EXTRA_IMAGE_FEATURES += "debug-tweaks"
     EXTRA_IMAGE_FEATURES += "ssh-server-openssh"
+    
