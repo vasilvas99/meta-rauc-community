@@ -1,9 +1,12 @@
 EXTRA_IMAGEDEPENDS += "u-boot"
 do_image_wic[depends] += "mtools-native:do_populate_sysroot dosfstools-native:do_populate_sysroot virtual/bootloader:do_deploy"
 
+QB_DEFAULT_FSTYPE = "wic"
+
 WKS_FILES = "qemuarm64.wks"
 UBOOT_MACHINE = "qemu_arm64_defconfig"
 QB_DRIVE_TYPE = "/dev/vda"
+
 # Ensure that U-Boot is using the boot script instead of extern Linux Kernel directly
 UBOOT_EXTLINUX = "0"
 
