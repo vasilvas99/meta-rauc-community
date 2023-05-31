@@ -12,16 +12,16 @@
 # ------------------------------------------------------
 
 
-bootloader --ptable gpt
+bootloader --ptable gpt --configfile="qemuarm64.cfg"
 
 # /dev/vda1
-part --source bootimg-partition --ondisk vda --fstype=vfat --label BOOT --active --align 4096 --size 100 --use-uuid
+part --source bootimg-partition --ondisk vda --fstype=vfat --label BOOT --active --use-uuid
 
 # /dev/vda2
-part --extra-space 50M --source rootfs --rootfs-dir=core-image-minimal --ondisk vda --fstype=ext4 --label root_a --align 4096
+part --extra-space 50M --source rootfs --ondisk vda --fstype=ext4 --label root_a --align 4096
 
 # /dev/vda3
-part --extra-space 50M --source rootfs --rootfs-dir=core-image-minimal  --ondisk vda --fstype=ext4 --label root_b --align 4096
+part --extra-space 50M --source rootfs  --ondisk vda --fstype=ext4 --label root_b --align 4096
 
 # /dev/vda4
-part --fixed-size 3072M --source rootfs -ondisk vda --fstype=ext4 --label data --align 4096
+part --fixed-size 3072M --source rootfs --ondisk vda --fstype=ext4 --label data --align 4096
