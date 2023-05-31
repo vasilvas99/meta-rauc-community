@@ -21,14 +21,7 @@ SRC_URI:append:qemuarm64 = " \
 
 DEPENDS:append:qemuarm64 = " bc-native dtc-native swig-native python3-native flex-native bison-native "
 
-KERNEL_IMAGETYPE = "Image"
-UBOOT_SUFFIX = "bin"
-KERNEL_BOOTCMD = "booti"
-UBOOT_ENTRYPOINT = "0x40008000"
-UBOOT_LOADADDRESS = "0x40008000"
-
-UBOOT_ENV = "boot"
-UBOOT_ENV_SUFFIX = "scr"
+require recipes-bsp/qemuarm64-extra.conf
 
 do_configure:append:qemuarm64() {
     sed -e 's/@@KERNEL_IMAGETYPE@@/${KERNEL_IMAGETYPE}/' \
