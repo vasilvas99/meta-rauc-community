@@ -7,7 +7,7 @@ SRC_URI:append:qemuarm64 = " \
 
 DEPENDS:append:qemuarm64 = " bc-native dtc-native swig-native python3-native flex-native bison-native "
 
-require recipes-bsp/qemuarm64-extra.conf
+require conf/machine/qemuarm64-extra.conf
 
 do_configure:append:qemuarm64() {
     sed -e 's/@@KERNEL_IMAGETYPE@@/${KERNEL_IMAGETYPE}/' \
