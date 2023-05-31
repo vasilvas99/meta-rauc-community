@@ -34,8 +34,7 @@ Building the demo system is most easily done using the ``kas`` tool. The file pr
 
 2. ``cd meta-rauc-qemuarm64``
 
-3. Generate example rauc keys following the instructions for the meta-rauc-qemux86 meta-layer:
-https://github.com/rauc/meta-rauc-community/tree/master/meta-rauc-qemux86#a-using-kas-tool-to-build
+3. Generate example rauc keys following the instructions for the meta-rauc-qemux86 meta-layer: https://github.com/rauc/meta-rauc-community/tree/master/meta-rauc-qemux86#a-using-kas-tool-to-build
 
 4. To build the image run ``kas build qemuarm64-demo-minimal.yaml``
 
