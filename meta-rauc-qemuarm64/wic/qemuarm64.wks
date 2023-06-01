@@ -12,7 +12,7 @@
 # ------------------------------------------------------
 
 
-bootloader --ptable gpt --configfile="qemuarm64.cfg"
+bootloader --ptable gpt
 
 # /dev/vda1
 part --source bootimg-partition --ondisk vda --fstype=vfat --label BOOT --active --use-uuid
