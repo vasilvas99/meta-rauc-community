@@ -1,0 +1,31 @@
+header:
+  # We require kas config version 10
+  version: 10
+machine: qemuarm64
+distro: poky
+repos:
+  meta-rauc:
+    url: "https://github.com/rauc/meta-rauc.git"
+    refspec: "kirkstone"
+  meta-rauc-demo:
+    path: ../
+    layers:
+      meta-rauc-qemuarm64:
+  poky:
+    url: "https://git.yoctoproject.org/git/poky"
+    refspec: "kirkstone"
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+target:
+  - core-image-minimal
+  - core-bundle-minimal
+local_conf_header:
+  meta-custom: |
+    DISTRO_FEATURES:append = " rauc"
+    IMAGE_INSTALL:append = " rauc"
+    IMAGE_FSTYPES = "tar.gz wic"
+    EXTRA_IMAGE_FEATURES += "debug-tweaks"
+    EXTRA_IMAGE_FEATURES += "ssh-server-openssh"
+    
