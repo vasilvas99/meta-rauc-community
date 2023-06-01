@@ -53,8 +53,10 @@ Running the build with kas will automatically generate a bundle in ``build/tmp/d
 
 2. After the system has successfully booted, loogin and run: ``udhcpc -i eth0`` to obtain an IP address.
 
-3. In a seperate terminal run: ``scp -P 2222 build/tmp/deploy/images/qemuarm64/core-bundle-minimal-qemuarm64.raucb root@localhost:/home/root`` and wait for it to fully transfer the bundle
+3. In a seperate terminal copy the bundle to the running image using scp::
 
+   $ scp -P 2222 build/tmp/deploy/images/qemuarm64/core-bundle-minimal-qemuarm64.raucb root@localhost:/home/root
+   
 4. Go back to the terminal with the running qemuarm64 image and run ``rauc install /home/root/core-bundle-minimal-qemuarm64.raucb``
 
 5. Wait for the bundle to install successfully and reboot the system.
