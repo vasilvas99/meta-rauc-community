@@ -38,7 +38,6 @@ Building the demo system is most easily done using the ``kas`` tool. The file pr
 
 4. To build the image run ``kas build qemuarm64-demo-minimal.yaml``
 
-5. After the build has successfully completed, you can boot into the image by running: ````
 5. After the build has successfully completed, you can boot into the image by running::
 
    kas shell qemuarm64-demo-minimal.yaml -c 'runqemu nographic core-image-minimal'
