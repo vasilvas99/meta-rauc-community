@@ -53,7 +53,7 @@ Running the build with kas will automatically generate a bundle in ``build/tmp/d
 
    $ kas shell qemuarm64-demo-minimal.yaml -c 'runqemu nographic slirp core-image-minimal'
 
-2. After the system has successfully booted, loogin and run: ``udhcpc -i eth0`` to obtain an IP address.
+2. After the system has successfully booted, login as root and run: ``udhcpc -i eth0`` to obtain an IP address.
 
 3. In a seperate terminal copy the bundle to the running image using scp::
 
