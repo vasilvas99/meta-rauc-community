@@ -22,7 +22,7 @@ To enable the integration this meta-layer does the following
 * Provides a boot.cmd.in script for the slot counting
 * Provides an ``u-boot_%.bbappend`` to compile and install the custom boot command
 * Provides a ``*.wks``-kickstart file to partition the drive and an fstab to mount the partitions in the final image
-* Provides a grow-data-partition systemd unit for the cases systemd is available.
+* Provides a grow-data-partition systemd unit for the cases when systemd is available.
 
 Building The qemuarm64 Demo System
 ==================================
