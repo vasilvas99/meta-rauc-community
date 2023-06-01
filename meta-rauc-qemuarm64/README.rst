@@ -49,7 +49,9 @@ This is again based on: https://github.com/vasilvas99/meta-rauc-community/tree/m
 
 Running the build with kas will automatically generate a bundle in ``build/tmp/deploy/images/qemuarm64``.
 
-1. Start the qemuarm64 system with user-level networking (slirp): ``kas shell qemuarm64-demo-minimal.yaml -c 'runqemu nographic slirp core-image-minimal'``
+1. Start the qemuarm64 system with user-level networking (slirp)::
+
+   $ kas shell qemuarm64-demo-minimal.yaml -c 'runqemu nographic slirp core-image-minimal'
 
 2. After the system has successfully booted, loogin and run: ``udhcpc -i eth0`` to obtain an IP address.
 
@@ -57,6 +59,8 @@ Running the build with kas will automatically generate a bundle in ``build/tmp/d
 
    $ scp -P 2222 build/tmp/deploy/images/qemuarm64/core-bundle-minimal-qemuarm64.raucb root@localhost:/home/root
    
-4. Go back to the terminal with the running qemuarm64 image and run ``rauc install /home/root/core-bundle-minimal-qemuarm64.raucb``
+4. Go back to the terminal with the running qemuarm64 image and run::
+
+   # rauc install /home/root/core-bundle-minimal-qemuarm64.raucb
 
 5. Wait for the bundle to install successfully and reboot the system.
